@@ -48,6 +48,28 @@ Me interesa que alcances estos logros:
     “modo Q”). Podrás encontrar más detalles en el capítulo 3 de
     @borcard_numerical_2018 (*Association Measures and Matrices*).
 
+# Instrucciones generales que aplican a todos los ejercicios.
+
+1.  **La instrucción más importante: tu práctica me la entregarás en
+    papel fotografiado (es preferible un PDF con todas las páginas
+    juntas, hay aplicaciones móviles para esto) y me la puedes enviar
+    por mensaje directo a través del foro. `R` sólo lo usarás para hacer
+    cálculos.**
+
+2.  Como se supone que esta práctica está pensada para hacerse en el
+    aula, el servidor sólo será un apoyo, y deberías poder operarlo
+    desde el teléfono. Por esta razón, la he diseñado de manera que sólo
+    tengas que copiar código desde este cuaderno y pegarlo en un script
+    de R (en el servidor, `File>New>R Script`). NO tienes que crear un
+    proyecto de RStudio. Si hay algún proyecto abierto al momento de
+    comenzar la práctica, ciérralo (`File>Close Project`).
+
+3.  Al final de cada ejercicio, debes escribir el **resumen del
+    ejercicio**. Esto lo harás, a mano, en un párrafo de mínimo cuatro
+    oraciones, explicando por qué hiciste lo que hiciste (oración 1),
+    cómo lo hiciste (oración 2), qué obtuviste (oración 3) y qué
+    interpretas (oración 4).
+
 # Ejercicio 1: Análisis Exploratorio de Datos (AED)
 
 ## Objetivo
