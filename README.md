@@ -3,7 +3,7 @@ Paradoja de Orlócy<small><br>Biogeografía (GEO-131)<br>Universidad
 Autónoma de Santo Domingo (UASD)<br>Semestre 2024-02</small>
 ================
 El Tali
-2024-09-10
+2025-01-06
 
 Versión HTML (quizá más legible),
 [aquí](https://biogeografia-master.github.io/aed-transformaciones-orlocy/README.html)
@@ -29,7 +29,7 @@ biológicas. Esta práctica permitirá a los estudiantes explorar ambas
 técnicas y comprender cómo los datos biológicos pueden ser transformados
 y analizados para obtener conclusiones más significativas.
 
-En principio, al menos para mí como profesor, me interesan dos cosas:
+Me interesa que alcances estos logros:
 
 1.  Que identifiques la matriz de comunidad como una clase de datos
     ecológicos específica, pues es muy usada en ecología numérica.
@@ -893,6 +893,33 @@ Para representar las distancias en un diagrama de dispersión:
 2.  **Datos Transformados con Hellinger**: Los puntos se colocan
     nuevamente, pero utilizando las coordenadas transformadas.
 
+``` r
+p1 <- community_matrix_1 %>%
+  rownames_to_column('id') %>% 
+  ggplot() +
+  aes(x = sp1, y = sp2, label = id) +
+  geom_point(size = 3) +
+  geom_text(vjust="inward",hjust="inward", size = 5, color = 'grey40') +
+  coord_equal() +
+  theme_bw() +
+  theme(text = element_text(size = 16)) +
+  ggtitle('Diagrama de dispersión\nMC original')
+p2 <- community_matrix_1 %>%
+  vegan::decostand(method = 'hell') %>% 
+  rownames_to_column('id') %>% 
+  ggplot() +
+  aes(x = sp1, y = sp2, label = id) +
+  geom_point(size = 3) +
+  geom_text(vjust="inward",hjust="inward", size = 5, color = 'grey40') +
+  coord_equal() +
+  theme_bw() +
+  theme(text = element_text(size = 16)) +
+  ggtitle('Diagrama de dispersión\nMC transformada')
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+<img src="README_files/figure-gfm/unnamed-chunk-10-1.png" width="100%" />
+
 #### Explicación Adicional y Enlace
 
 Para una explicación más detallada de la paradoja de Orlócy y cómo se
@@ -907,7 +934,3 @@ D = 1 - S \quad \text{y viceversa,} \quad S = 1 - D
 $$
 
 donde $D$ es la disimilitud y $S$ es la similitud entre los sitios.
-
-``` r
-knitr::knit_exit()
-```

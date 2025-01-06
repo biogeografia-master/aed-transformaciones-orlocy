@@ -60,7 +60,7 @@ library(tidyverse)
 
 La biogeografía estudia la distribución de especies y ecosistemas en el espacio geográfico y a lo largo del tiempo. El análisis exploratorio de datos (AED) permite identificar patrones en los datos biológicos, mientras que la paradoja de Orlócy ilustra cómo las transformaciones de datos afectan la percepción de similitud y disimilitud entre comunidades biológicas. Esta práctica permitirá a los estudiantes explorar ambas técnicas y comprender cómo los datos biológicos pueden ser transformados y analizados para obtener conclusiones más significativas.
 
-En principio, al menos para mí como profesor, me interesan dos cosas:
+Me interesa que alcances estos logros:
 
 1. Que identifiques la matriz de comunidad como una clase de datos ecológicos específica, pues es muy usada en ecología numérica.
 
@@ -544,8 +544,8 @@ Para representar las distancias en un diagrama de dispersión:
 2. **Datos Transformados con Hellinger**: Los puntos se colocan nuevamente, pero utilizando las coordenadas transformadas.
 
 
-```{r, eval=F,echo=F,include=F}
-p1 <- mc_orloci %>%
+```{r}
+p1 <- community_matrix_1 %>%
   rownames_to_column('id') %>% 
   ggplot() +
   aes(x = sp1, y = sp2, label = id) +
@@ -554,8 +554,9 @@ p1 <- mc_orloci %>%
   coord_equal() +
   theme_bw() +
   theme(text = element_text(size = 16)) +
-  ggtitle('mc original')
-p2 <- mc_orloci_norm %>%
+  ggtitle('Diagrama de dispersión\nMC original')
+p2 <- community_matrix_1 %>%
+  vegan::decostand(method = 'hell') %>% 
   rownames_to_column('id') %>% 
   ggplot() +
   aes(x = sp1, y = sp2, label = id) +
@@ -564,8 +565,8 @@ p2 <- mc_orloci_norm %>%
   coord_equal() +
   theme_bw() +
   theme(text = element_text(size = 16)) +
-  ggtitle('mc transformada')
-grid.arrange(p1, p2, nrow = 1)
+  ggtitle('Diagrama de dispersión\nMC transformada')
+gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
 
@@ -583,6 +584,6 @@ donde \(D\) es la disimilitud y \(S\) es la similitud entre los sitios.
 
 
 
-```{r}
+```{r, echo=F, eval=F}
 knitr::knit_exit()
 ```
