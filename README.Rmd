@@ -1,5 +1,5 @@
 ---
-title: "Prácticas de aula (PA04): Análisis Exploratorio de Datos (AED) y Paradoja de Orlócy<small><br>Biogeografía (GEO-131)<br>Universidad Autónoma de Santo Domingo (UASD)<br>Semestre 2024-02</small>"
+title: "Prácticas de aula (PA04): Análisis Exploratorio de Datos (AED) y Paradoja de Orlócy<small><br>Biogeografía (GEO-131)<br>Universidad Autónoma de Santo Domingo (UASD)<br>Semestre 2025-01</small>"
 author: "El Tali"
 date: "`r format(Sys.Date(), '%Y-%m-%d')`"
 output:
@@ -16,7 +16,7 @@ output:
 editor_options: 
   chunk_output_type: console
 always_allow_html: true
-# bibliography: references.bib
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -54,19 +54,21 @@ library(tidyverse)
 
 # Fecha/hora de entrega
 
-**11 de septiembre de 2024, 11:59 pm.**
+**11 de marzo de 2025, 11:59 pm.**
 
 # Introducción
 
-La biogeografía estudia la distribución de especies y ecosistemas en el espacio geográfico y a lo largo del tiempo. El análisis exploratorio de datos (AED) permite identificar patrones en los datos biológicos, mientras que la paradoja de Orlócy ilustra cómo las transformaciones de datos afectan la percepción de similitud y disimilitud entre comunidades biológicas. Esta práctica permitirá a los estudiantes explorar ambas técnicas y comprender cómo los datos biológicos pueden ser transformados y analizados para obtener conclusiones más significativas.
+La biogeografía estudia la distribución de especies y ecosistemas en el espacio geográfico y a lo largo del tiempo. El análisis exploratorio de datos (AED) permite identificar tanto patrones a prioir en los datos biológicos, como errores y/o omisiones. Por otro lado, la paradoja de Orlócy ilustra cómo las transformaciones de datos afectan la percepción de similitud y disimilitud entre comunidades biológicas.
+
+Esta práctica te permitirá explorar ambas técnicas y comprender cómo los datos biológicos pueden ser transformados y analizados para obtener conclusiones más significativas.
 
 Me interesa que alcances estos logros:
 
-1. Que identifiques la matriz de comunidad como una clase de datos ecológicos específica, pues es muy usada en ecología numérica.
+1. Que identifiques la matriz de comunidad como un objeto de la clase "datos ecológicos" con sus especificidades, pues es muy usada en ecología numérica (de todas formas, a estas alturas, es probable que ya hayas visto y comprendido el concepto de matriz de comunidad).
 
-2. Que visibilices las dificultades inherentes de realizar análisis exploratorio de datos (AED) manualmente, y que a la vez comprendas la teoría detrás de algunos estadísticos y representaciones básicas. Recuerda la referencia sobre el "Cuarteto de Anscombe" y "La docena del Datasauro".
+2. Que visibilices las dificultades inherentes de realizar análisis exploratorio de datos (AED) manualmente, y que a la vez comprendas la teoría detrás de algunos estadísticos y representaciones básicas. Recuerda la referencia sobre el ["Cuarteto de Anscombe"](https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe) y ["La docena del Datasauro"](https://jumpingrivers.github.io/datasauRus/).
 
-3. Que identifiques **la importancia de aplicar transformaciones a los datos cuando se requiera**. El desconocimiento sobre la necesidad de transformar los datos, comúnmente se traduce cometen en errores en los análisis de diversidad alpha y beta, especialmente donde interviene cualquier métrica de disimilitud/similitud (el denominado "modo Q"). Podrás encontrar más detalles en el capítulo 3 de @borcard_numerical_2018 (*Association Measures and Matrices*).
+3. Que identifiques **la importancia de aplicar transformaciones a los datos allí cuando se requiera**. El desconocimiento sobre la necesidad de transformar los datos, comúnmente se traduce en errores que son traslados a los análisis de diversidad alpha y beta, especialmente donde interviene cualquier métrica de disimilitud/similitud (el denominado "modo Q"). Podrás encontrar más detalles en el capítulo 3 de @borcard_numerical_2018 (*Association Measures and Matrices*).
 
 
 # Instrucciones generales que aplican a todos los ejercicios.
@@ -75,23 +77,21 @@ Me interesa que alcances estos logros:
 
 2. Como se supone que esta práctica está pensada para hacerse en el aula, el servidor sólo será un apoyo, y deberías poder operarlo desde el teléfono. Por esta razón, la he diseñado de manera que sólo tengas que copiar código desde este cuaderno y pegarlo en un script de R (en el servidor, `File>New>R Script`). NO tienes que crear un proyecto de RStudio. Si hay algún proyecto abierto al momento de comenzar la práctica, ciérralo (`File>Close Project`).
 
-3. Al final de cada ejercicio, debes escribir el **resumen del ejercicio**. Esto lo harás, a mano, en un párrafo de mínimo cuatro oraciones, explicando por qué hiciste lo que hiciste (oración 1), cómo lo hiciste (oración 2), qué obtuviste (oración 3) y qué interpretas (oración 4).
+3. Al final de cada ejercicio (son dos ejercicios, como verás abajo), debes escribir el **resumen del ejercicio**. Esto lo harás, a mano, en un párrafo de mínimo cuatro oraciones, explicando por qué hiciste lo que hiciste (oración 1), cómo lo hiciste (oración 2), qué obtuviste (oración 3) y qué interpretas (oración 4).
 
 # Ejercicio 1: Análisis Exploratorio de Datos (AED)
 
 ## Objetivo
 
-Calcular estadísticos descriptivos básicos de la abundancia de especies por sitio y representar los resultados en diagramas de caja.
+Calcular los estadísticos descriptivos básicos de la abundancia de especies por sitio y representar los resultados en diagramas de caja.
 
-## Planteamiento del Problema
+## Mandato
 
-Utiliza una de las 20 matrices de comunidad proporcionadas, cada una con cinco especies y tres sitios, para calcular las siguientes medidas: media, desviación estándar, primer cuartil, tercer cuartil, rango intercuartilar (RIC), máximo, mínimo y atípicos (usando bisagras de Tukey).
+Elige una de las 20 matrices de comunidad proporcionadas; reserva la 1 al Tali, por lo que, en la práctica, tendrás 19 para elegir. Anuncia tu elección en el foro, especificando que se trata de esta práctica, ejercicio 1. Cada una contiene cinco especies repartidas en tres sitios, para calcular las siguientes medidas: media, desviación estándar, primer cuartil, tercer cuartil, rango intercuartilar (RIC), máximo, mínimo y atípicos (usando bisagras de Tukey).
 
 ## Datos Proporcionados
 
-Se proporcionan 20 matrices de comunidad generadas aleatoriamente, cada una representando la abundancia de cinco especies en tres sitios. Elige una de las matrices.
-
-### Matrices de Comunidad
+Se proporcionan a continuación 20 matrices de comunidad generadas aleatoriamente (recuerda: reserva la 1 al Tali), cada una representando la abundancia de cinco especies en tres sitios.
 
 ```{r}
 # Generación de 20 matrices de comunidad
@@ -121,7 +121,7 @@ for (tabla in 1:length(community_matrices_k)) {
 
 ## Ejemplo Práctico
 
-Calculemos las estadísticas descriptivas para la **Matriz de comunidad 1**. Los estadísticos a calcular son: media, desviación estándar, primer cuartil (Q1), tercer cuartil (Q3), rango intercuartilar (RIC), máximo, mínimo y valores atípicos (usando bisagras de Tukey).
+Calcularé los estadísticos descriptivos para el sitio 1 de la matriz de comunidad 1, **pero en tu caso, deberás hacerlo para cada uno de los tres sitios**. Los estadísticos a calcular son: media, desviación estándar, primer cuartil (Q1), tercer cuartil (Q3), rango intercuartilar (RIC), máximo, mínimo y valores atípicos (usando bisagras de Tukey).
 
 ### Plantilla para Cálculos
 
@@ -140,7 +140,7 @@ community_matrix_1 <- community_matrices[[1]]
 community_matrix_1 <- as.data.frame(community_matrix_1)
 ```
 
-### Datos Proporcionados: Matriz de Comunidad 1
+### Datos Proporcionados de la matriz de comunidad 1
 
 La **Matriz de comunidad 1** es la siguiente:
 
@@ -150,11 +150,21 @@ La **Matriz de comunidad 1** es la siguiente:
 | sit2   |  7  |  9  |  8  |  9  |  5  |
 | sit3   |  4  |  2  |  5  |  5  |  2  |
 
-Para el **Sitio 1**, se consideran los valores de abundancia de las cinco especies: 4, 8, 5, 5, 6.
+> Los sitios se abrevian como "sit" seguidos de un número del 1 al 3, y las especies como "sp" seguidas de un número del 1 al 5.
+
+Observando la matriz, podríamos leer esto: "en el sitio 1 hay 4, 8, 5, 5 y 6 individuos, de las especies sp1, sp2, sp3, sp4 y sp5, respectivamente".
 
 ### Paso 1: Cálculo de la Media
 
-La **media** de la abundancia de especies en el Sitio 1 se calcula sumando las abundancias de todas las especies en ese sitio y dividiendo por el número de especies (5).
+> Recuerda que sólo mostraré los cálculos para el sitio 1, pero debes hacerlo para cada uno de los sitios.
+
+La **media** de la abundancia de especies en el sitio 1 se calcula sumando las abundancias de todas las especies en ese sitio y dividiendo por el número de especies (media muestral). La fórmula es:
+
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]
+
+Aplicada al caso actual sería:
 
 \[
 \text{Media}_{Sitio 1} = \frac{\text{Abundancia de sp1} + \text{Abundancia de sp2} + \text{Abundancia de sp3} + \text{Abundancia de sp4} + \text{Abundancia de sp5}}{5}
@@ -166,17 +176,21 @@ Sustituyendo los valores:
 \text{Media}_{Sitio 1} = \frac{4 + 8 + 5 + 5 + 6}{5} = \frac{28}{5} = 5.6
 \]
 
+> Nota: si una especie tuviese abundancia 0, aun así la especie se consideraría parte de la muestra, por lo que tendríamos \(n=5\).
+
 ### Paso 2: Cálculo de la Desviación Estándar
 
-La **desviación estándar** mide la dispersión de las abundancias alrededor de la media. Se calcula utilizando la fórmula:
+La **desviación estándar** (en este caso, usaremos la muestral) mide la dispersión de las abundancias alrededor de la media. Se calcula utilizando la fórmula:
 
 \[
 \text{Desviación Estándar}_{Sitio 1} = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i - \text{Media})^2}
 \]
 
 donde:
+
 - \(x_i\) es la abundancia de cada especie en el Sitio 1.
-- \(n = 5\) es el número de especies.
+
+- \(n\) es el número de especies, que en el ejemplo es 5. Si una especie tuviese abundancia 0, la especie se considera parte de la muestra \(n=5\).
 
 Primero, calculamos las diferencias al cuadrado entre cada abundancia y la media:
 
@@ -225,6 +239,10 @@ La **mediana (Q2)** es el valor central que divide el conjunto de datos en dos m
 \[
 Q2 = 5
 \]
+
+> Nota: si \( n \) es **par**, la mediana es el promedio de los dos valores centrales:
+
+  \[ Q2 = \frac{x_{\left(\frac{n}{2}\right)} + x_{\left(\frac{n}{2} + 1\right)}}{2} \]
 
 3. **Dividir el conjunto de datos en dos mitades** usando la mediana:
 
@@ -323,20 +341,34 @@ ggplot(community_matrix_1_long, aes(x = sitios, y = abundancia)) +
 
 "Se obtuvieron una media de 5.6 individuos y una desviación estándar de 1.52 para la abundancia de especies en el Sitio 1. El primer cuartil (Q1) fue calculado en 5, y el tercer cuartil (Q3) en 6, resultando en un rango intercuartílico (RIC) de 1. La abundancia mínima registrada fue de 3.5, y la máxima de 7.5. Se identificó un valor atípico de 8, que excede los límites del rango intercuartílico." 
 
-## Ejercicio 2: Paradoja de Orlócy, Distancias, Disimilitudes, Similitudes y Transformaciones
 
-### Objetivo
+
+
+
+
+
+
+
+
+
+
+# Ejercicio 2: Paradoja de Orlócy, Distancias, Disimilitudes, Similitudes y Transformaciones
+
+## Objetivo
 
 Calcular distancias entre pares de sitios utilizando una matriz de comunidad, representar gráficamente la localización en un espacio bidimensional sin transformar y con la transformación de Hellinger.
 
-### Planteamiento del Problema
+## Mandato
 
-Usaremos una **nueva Matriz de comunidad 1** para este ejemplo práctico y realizaremos los siguientes pasos:
+Usarás una **nueva matriz de comunidad** para este ejercicio. Elige una de las 20 matrices de comunidad proporcionadas abajo. Anuncia tu elección en el foro, especificando que se trata de esta práctica, ejercicio 2. 
 
-1. Calcular las distancias entre los sitios (sitio 1, sitio 2, sitio 3) sin transformar los datos.
-2. Aplicar la transformación de Hellinger a los datos y recalcular las distancias.
-3. Representar gráficamente las distancias antes y después de la transformación en un espacio bidimensional.
+Realiza las siguientes operaciones:
 
+1. Calcula las distancias entre los sitios (sitio 1, sitio 2, sitio 3) sin transformar los datos.
+
+2. Aplica la transformación de Hellinger a los datos y recalcula las distancias.
+
+3. Representa gráficamente las distancias antes y después de la transformación en un espacio bidimensional.
 
 ### Datos Proporcionados
 
